@@ -1,9 +1,22 @@
-#Server configurations
+#Server and datasource configuration
 spring:
   application:
     name: bed-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/bed_db
+    username: Chilufya
+    password: Kenzie@2023
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+
 server:
   port: 8080
+
 #eureka client configuration
 eureka:
   client:
