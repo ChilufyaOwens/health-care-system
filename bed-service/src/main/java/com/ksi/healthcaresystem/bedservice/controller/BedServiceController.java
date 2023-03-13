@@ -63,7 +63,7 @@ public class BedServiceController {
    * @param bedCode bed code
    * @return bed details
    */
-  @GetMapping("{code}")
+  @GetMapping("/bed-code/{code}")
   public ResponseEntity<BedDto> getBedByCode(@PathVariable("code") String bedCode) {
     BedDto bedDto = bedService.getBedByCode(bedCode);
     return new ResponseEntity<>(bedDto, HttpStatus.OK);
