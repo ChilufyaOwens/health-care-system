@@ -37,6 +37,7 @@ public class BedServiceImpl implements BedService {
       throw new BedCodeAlreadyExistsException("The supplied Bed code already exists");
     }
     Bed bed = BedMapper.MAPPER.mapToBed(bedDto);
+    bed.setStatus(Status.AVAILABLE);
     Bed savedBed = bedRepository.save(bed);
 
     return BedMapper.MAPPER.mapToBedDto(savedBed);
@@ -78,7 +79,7 @@ public class BedServiceImpl implements BedService {
   }
 
   /**
-   * This method gets all saved beds from the database
+   * This method gets a list of all saved beds from the database
    *
    * @return list of beds
    */
