@@ -79,7 +79,7 @@ public class BedServiceImpl implements BedService {
   }
 
   /**
-   * This method gets all saved beds from the database
+   * This method gets a list of all saved beds from the database
    *
    * @return list of beds
    */
