@@ -12,4 +12,5 @@ public interface BedMapper {
 
   BedDto mapToBedDto(Bed bed);
   Bed mapToBed(BedDto bedDto);
+
 }
