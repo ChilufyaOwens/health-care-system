@@ -1,6 +1,7 @@
 package com.ksi.healthcaresystem.bedservice.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,6 +19,6 @@ public class BedDto {
   private String bedCode;
   @NotEmpty(message = "Bed type should not be empty or null")
   private String bedType;
-  @NotEmpty(message = "Bed status should not be empty or null")
   private String status;
+  private LocalDateTime createdAt;
 }
