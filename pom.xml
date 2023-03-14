@@ -9,6 +9,7 @@
     <module>bed-service</module>
     <module>service-registry</module>
     <module>commons</module>
+    <module>api-gateway</module>
   </modules>
   <version>1.0-SNAPSHOT</version>
 
