@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/admission-discharge-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/admission-discharge-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/api-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/api-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/appointment-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/appointment-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bed-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bed-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/commons/src/main/java" charset="UTF-8" />
@@ -11,9 +15,33 @@
     <file url="file://$PROJECT_DIR$/config-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/healthcare-config-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/healthcare-config-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/helpdesk-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/helpdesk-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/information-desk-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/information-desk-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/inpatient-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/inpatient-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/inventory-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/inventory-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/laboratory-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/laboratory-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nursing-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/nursing-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/outpatient-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/outpatient-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/patient-care-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/patient-care-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pharmacy-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pharmacy-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/registration-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/registration-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-registry/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-registry/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/statistics-reporting-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/statistics-reporting-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ward-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ward-service/src/main/resources" charset="UTF-8" />
   </component>
 </project>
