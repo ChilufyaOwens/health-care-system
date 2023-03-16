@@ -1,0 +1,6 @@
+## application configuration properties
+spring:
+  application:
+    name: patient-registration
+  config:
+    import: optional:configserver:http://localhost:8888

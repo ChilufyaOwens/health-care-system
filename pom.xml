@@ -10,6 +10,21 @@
     <module>service-registry</module>
     <module>commons</module>
     <module>api-gateway</module>
+    <module>config-server</module>
+    <module>ward-service</module>
+    <module>outpatient-service</module>
+    <module>inpatient-service</module>
+    <module>appointment-service</module>
+    <module>registration-service</module>
+    <module>admission-discharge-service</module>
+    <module>nursing-service</module>
+    <module>inventory-service</module>
+    <module>helpdesk-service</module>
+    <module>statistics-reporting-service</module>
+    <module>laboratory-service</module>
+    <module>pharmacy-service</module>
+    <module>patient-care-service</module>
+    <module>information-desk-service</module>
   </modules>
   <version>1.0-SNAPSHOT</version>
 
