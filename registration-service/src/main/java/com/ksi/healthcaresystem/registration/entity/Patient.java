@@ -10,14 +10,19 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.ToString.Exclude;
 
 @Getter
 @Setter
@@ -65,5 +70,17 @@ public class Patient extends Auditable<Long>{
   @Enumerated(EnumType.STRING)
   @Column(name = "marital_status")
   private MaritalStatus maritalStatus;
+
+  @OneToOne(mappedBy = "patient")
+  @PrimaryKeyJoinColumn
+  private Address address;
+
+  @OneToMany(mappedBy = "patient")
+  @Exclude
+  private Set<EmergencyContact> emergencyContacts;
+
+  @OneToMany(mappedBy = "patient")
+  @Exclude
+  private Set<Insurance> insurances;
 
 }

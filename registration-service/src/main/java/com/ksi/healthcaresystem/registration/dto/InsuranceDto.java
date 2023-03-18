@@ -1,9 +1,7 @@
 package com.ksi.healthcaresystem.registration.dto;
 
-import com.ksi.healthcaresystem.registration.dto.PatientDto;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import lombok.Data;
 
 /**
@@ -12,7 +10,6 @@ import lombok.Data;
 @Data
 public class InsuranceDto implements Serializable {
 
-  private final LocalDateTime createdAt;
   private final Long id;
   private final PatientDto patient;
   private final String insuranceCompany;

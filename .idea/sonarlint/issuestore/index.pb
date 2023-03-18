@@ -37,10 +37,6 @@ C
 bbed-service/src/main/java/com/ksi/healthcaresystem/bedservice/controller/BedServiceController.java,7\c\7c2c85fa15f726aadcdf6725e6df6078f4755ecd
 ­
 }registration-service/src/main/java/com/ksi/healthcaresystem/registration/controller/PatientRegistrationServiceController.java,7\9\7921b051c36e9e81bf2c3b04ac97f83ff5a2882c
- 
-pregistration-service/src/main/java/com/ksi/healthcaresystem/registration/service/PatientRegistrationService.java,2\6\26119221d38c62e928f7f0cdc97f4db9010f665b
-©
-yregistration-service/src/main/java/com/ksi/healthcaresystem/registration/service/impl/PatientRegistrationServiceImpl.java,3\f\3f5ba88dec9eb413473072841d6342d58444ec2c
 ƒ
 Sbed-service/src/main/java/com/ksi/healthcaresystem/bedservice/entity/Auditable.java,d\0\d05f70e6093a5be49c69d4dd76457fee34e680d5
 ™
