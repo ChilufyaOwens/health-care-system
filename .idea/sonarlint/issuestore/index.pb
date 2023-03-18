@@ -35,8 +35,6 @@ C
 bed-service/pom.xml,2\d\2da274e17c4df4baab764da48e50dae072d6ac89
 ’
 bbed-service/src/main/java/com/ksi/healthcaresystem/bedservice/controller/BedServiceController.java,7\c\7c2c85fa15f726aadcdf6725e6df6078f4755ecd
-­
-}registration-service/src/main/java/com/ksi/healthcaresystem/registration/controller/PatientRegistrationServiceController.java,7\9\7921b051c36e9e81bf2c3b04ac97f83ff5a2882c
 ƒ
 Sbed-service/src/main/java/com/ksi/healthcaresystem/bedservice/entity/Auditable.java,d\0\d05f70e6093a5be49c69d4dd76457fee34e680d5
 ™
@@ -47,7 +45,5 @@ bregistration-service/src/main/java/com/ksi/healthcaresystem/registration/dto/co
 Mbed-service/src/main/java/com/ksi/healthcaresystem/bedservice/entity/Bed.java,1\b\1b429dd7e52bedf60e387215c5433252a328037a
 ˆ
 Xbed-service/src/main/java/com/ksi/healthcaresystem/bedservice/BedServiceApplication.java,7\f\7ffb3ec010602af826278f959aef12641248999d
-š
-jregistration-service/src/main/java/com/ksi/healthcaresystem/registration/repository/PatientRepository.java,e\4\e4bb0bc078edbce78cc6fe32f4e2aabfab777e73
 Ž
 ^registration-service/src/main/java/com/ksi/healthcaresystem/registration/entity/Auditable.java,e\5\e541b4922c04ffb6f122e059e16b71d45f43f4b8

@@ -1,26 +1,32 @@
 package com.ksi.healthcaresystem.registration.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * A DTO for the {@link com.ksi.healthcaresystem.registration.entity.Address} entity
  */
-@Data
+
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class AddressDto implements Serializable {
-
-  private final Long id;
-  @NotNull(message = "Patient details should not be null")
-  private final PatientDto patient;
-
+  private Long id;
   @NotEmpty(message = "Address line one should not be null")
-  private final String streetAddressLineOne;
-  private final String streetAddressLineTwo;
+  private String streetAddressLineOne;
+  private String streetAddressLineTwo;
   @NotEmpty(message = "City should not be empty or null")
-  private final String city;
-  private final String stateProvince;
-  private final String zipCode;
-  private final String country;
+  private String city;
+  private String stateProvince;
+  private String zipCode;
+  private String country;
 }
