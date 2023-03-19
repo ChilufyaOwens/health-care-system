@@ -1,5 +1,8 @@
 package com.ksi.healthcaresystem.registration.service;
 
-public interface PatientRegistrationService {
 
+import com.ksi.healthcaresystem.registration.dto.PatientDto;
+
+public interface PatientRegistrationService {
+  PatientDto registerPatient(PatientDto patientDto);
 }

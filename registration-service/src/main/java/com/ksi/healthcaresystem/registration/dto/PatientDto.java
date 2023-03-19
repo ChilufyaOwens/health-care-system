@@ -1,16 +1,14 @@
 package com.ksi.healthcaresystem.registration.dto;
 
-import com.ksi.healthcaresystem.registration.dto.constants.Gender;
-import com.ksi.healthcaresystem.registration.dto.constants.MaritalStatus;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -19,21 +17,29 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@RequiredArgsConstructor
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class PatientDto implements Serializable {
-
-  private final LocalDateTime createdAt;
-  private final Long id;
-  private final String healthCareNumber;
-  private final String firstName;
-  private final String otherName;
-  private final String lastName;
-  private final LocalDate dateOfBirth;
-  private final String identificationNumber;
-  private final String gender;
-  private final String contactNumber;
-  private final String email;
-  private final String maritalStatus;
+  private Long id;
+  private String healthCareNumber;
+  @NotEmpty(message = "Firstname should not be empty or null")
+  private String firstName;
+  private String otherName;
+  @NotEmpty(message = "Lastname should not be empty or null")
+  private String lastName;
+  @NotNull(message = "Date of birth should not be empty or null")
+  private String dateOfBirth;
+  private String identificationNumber;
+  @NotEmpty(message = "Gender should not be empty or null")
+  private String gender;
+  private String contactNumber;
+  @Email
+  private String email;
+  private String maritalStatus;
+  private AddressDto address;
+  @NotEmpty(message = "At least one emergency contact should be provided")
+  private Set<EmergencyContactDto> emergencyContacts;
+  private Set<InsuranceDto> insurances;
 }
