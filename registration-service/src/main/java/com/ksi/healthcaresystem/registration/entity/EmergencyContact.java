@@ -18,6 +18,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.ToString.Exclude;
 import net.minidev.json.annotate.JsonIgnore;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -36,6 +38,7 @@ public class EmergencyContact extends Auditable<Long>{
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @Cascade(CascadeType.SAVE_UPDATE)
   @MapsId
   @JoinColumn(name = "patient_id", nullable = false)
   @OnDelete(action = OnDeleteAction.CASCADE)

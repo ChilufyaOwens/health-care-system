@@ -3,6 +3,7 @@ package com.ksi.healthcaresystem.registration.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ksi.healthcaresystem.registration.dto.constants.Gender;
 import com.ksi.healthcaresystem.registration.dto.constants.MaritalStatus;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,19 +11,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.ToString.Exclude;
 
 @Getter
 @Setter
@@ -35,7 +31,7 @@ import lombok.ToString.Exclude;
 @Table(name = "patient")
 public class Patient extends Auditable<Long>{
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id;
 
@@ -70,17 +66,5 @@ public class Patient extends Auditable<Long>{
   @Enumerated(EnumType.STRING)
   @Column(name = "marital_status")
   private MaritalStatus maritalStatus;
-
-  @OneToOne(mappedBy = "patient")
-  @PrimaryKeyJoinColumn
-  private Address address;
-
-  @OneToMany(mappedBy = "patient")
-  @Exclude
-  private Set<EmergencyContact> emergencyContacts;
-
-  @OneToMany(mappedBy = "patient")
-  @Exclude
-  private Set<Insurance> insurances;
 
 }
