@@ -3,6 +3,7 @@ package com.ksi.healthcaresystem.registration.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ksi.healthcaresystem.registration.dto.constants.Gender;
 import com.ksi.healthcaresystem.registration.dto.constants.MaritalStatus;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -30,7 +31,7 @@ import lombok.ToString;
 @Table(name = "patient")
 public class Patient extends Auditable<Long>{
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id;
 
