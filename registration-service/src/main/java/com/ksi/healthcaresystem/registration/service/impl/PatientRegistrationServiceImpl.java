@@ -11,6 +11,7 @@ import com.ksi.healthcaresystem.registration.service.EmergencyContactService;
 import com.ksi.healthcaresystem.registration.service.PatientAddressService;
 import com.ksi.healthcaresystem.registration.service.PatientInsuranceService;
 import com.ksi.healthcaresystem.registration.service.PatientRegistrationService;
+import com.ksi.healthcaresystem.registration.service.utils.HealthCareNumberGenerator;
 import java.util.HashSet;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,8 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
   public PatientDto registerPatient(PatientDto patientDto) {
     log.info("Registering new patient with details: {}", patientDto);
     Patient patient = patientMapper.toEntity(patientDto);
+    String healthCareNumber = HealthCareNumberGenerator.generateHealthCareNumber();
+    patient.setHealthCareNumber(healthCareNumber);
     Patient registeredPatient = patientRepository.save(patient);
     PatientDto savedPatient = patientMapper.toDto(registeredPatient);
     //Save patient address
