@@ -9,12 +9,12 @@ import com.ksi.healthcaresystem.registration.service.PatientInsuranceService;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j(topic = "PATIENT_INSURANCE_SERVICE")
+@Log4j2(topic = "PATIENT_INSURANCE_SERVICE")
 public class PatientInsuranceServiceImpl implements PatientInsuranceService {
   private final InsuranceRepository insuranceRepository;
   private final InsuranceMapper insuranceMapper;
