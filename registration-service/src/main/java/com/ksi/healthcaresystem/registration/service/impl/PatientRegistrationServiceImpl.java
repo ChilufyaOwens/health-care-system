@@ -16,12 +16,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j(topic = "PATIENT_REGISTRATION_SERVICE")
+@Log4j2(topic = "PATIENT_REGISTRATION_SERVICE")
 public class PatientRegistrationServiceImpl implements PatientRegistrationService {
 
   private final PatientRepository patientRepository;
