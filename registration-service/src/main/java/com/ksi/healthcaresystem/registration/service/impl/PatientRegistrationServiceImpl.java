@@ -12,6 +12,7 @@ import com.ksi.healthcaresystem.registration.service.PatientAddressService;
 import com.ksi.healthcaresystem.registration.service.PatientInsuranceService;
 import com.ksi.healthcaresystem.registration.service.PatientRegistrationService;
 import com.ksi.healthcaresystem.registration.service.utils.HealthCareNumberGenerator;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j(topic = "PATIENT_REGISTRATION_SERVICE")
 public class PatientRegistrationServiceImpl implements PatientRegistrationService {
+
   private final PatientRepository patientRepository;
   private final PatientMapper patientMapper;
   private final PatientAddressService patientAddressService;
@@ -30,27 +32,33 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
 
   /**
    * This method registers new patient
+   *
    * @param patientDto patient registration details
    * @return registered patient
    */
   @Override
   public PatientDto registerPatient(PatientDto patientDto) {
     log.info("Registering new patient with details: {}", patientDto);
-    Patient patient = patientMapper.toEntity(patientDto);
-    String healthCareNumber = HealthCareNumberGenerator.generateHealthCareNumber();
-    patient.setHealthCareNumber(healthCareNumber);
+    Patient mappedPatient = patientMapper.toEntity(patientDto);
+    //Create a patient object
+    Patient patient = getPatient(mappedPatient);
+
     Patient registeredPatient = patientRepository.save(patient);
     PatientDto savedPatient = patientMapper.toDto(registeredPatient);
+
     //Save patient address
     AddressDto savedAddress = patientAddressService.savePatientAddress(
         patientDto.getAddress(),
         registeredPatient);
     savedPatient.setAddress(savedAddress);
+
     //Save patient emergency contacts
     List<EmergencyContactDto> emergencyContacts = emergencyContactService.saveEmergencyContacts(
         patientDto.getEmergencyContacts(), registeredPatient);
     savedPatient.setEmergencyContacts(new HashSet<>(emergencyContacts));
-    if(!patientDto.getInsurances().isEmpty()){
+
+    //Save only if patient has insurance
+    if (!patientDto.getInsurances().isEmpty()) {
       List<InsuranceDto> insurances = patientInsuranceService.savePatientInsurances(patientDto
           .getInsurances()
           .stream()
@@ -58,5 +66,45 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
       savedPatient.setInsurances(new HashSet<>(insurances));
     }
     return savedPatient;
+  }
+
+  /**
+   * This method builds the patient object to be saved
+   * @param mappedPatient mapped patient details
+   * @return new patient
+   */
+  private static Patient getPatient(Patient mappedPatient) {
+    //Get health care number
+    String healthCareNumber = HealthCareNumberGenerator.generateHealthCareNumber();
+    return new Patient(
+        mappedPatient.getId(),
+        healthCareNumber,
+        mappedPatient.getFirstName(),
+        mappedPatient.getOtherName(),
+        mappedPatient.getLastName(),
+        mappedPatient.getDateOfBirth(),
+        mappedPatient.getIdentificationNumber(),
+        mappedPatient.getGender(),
+        mappedPatient.getContactNumber(),
+        mappedPatient.getEmail(),
+        mappedPatient.getMaritalStatus()
+    );
+  }
+
+  /**
+   * This method gets all registered patients
+   *
+   * @return list of all registered patients
+   */
+  @Override
+  public List<PatientDto> getAllRegisteredPatients() {
+    List<Patient> patients = patientRepository.findAll();
+    List<PatientDto> patientList = new ArrayList<>();
+    patients.forEach(patient -> {
+      PatientDto patientDto = patientMapper.toDto(patient);
+      patientList.add(patientDto);
+    });
+
+    return patientList;
   }
 }

@@ -3,6 +3,7 @@ package com.ksi.healthcaresystem.registration.service.utils;
 import java.time.LocalDate;
 import java.util.random.RandomGenerator;
 
+
 public interface HealthCareNumberGenerator {
 
   /**
