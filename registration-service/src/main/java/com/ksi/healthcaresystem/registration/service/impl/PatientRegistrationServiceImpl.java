@@ -1,5 +1,6 @@
 package com.ksi.healthcaresystem.registration.service.impl;
 
+import com.ksi.healthcaresystem.commons.exception.ResourceNotFoundException;
 import com.ksi.healthcaresystem.registration.dto.AddressDto;
 import com.ksi.healthcaresystem.registration.dto.EmergencyContactDto;
 import com.ksi.healthcaresystem.registration.dto.InsuranceDto;
@@ -15,6 +16,7 @@ import com.ksi.healthcaresystem.registration.service.utils.HealthCareNumberGener
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -106,5 +108,21 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
     });
 
     return patientList;
+  }
+
+  /**
+   * This method gets registered pstient by patient ID
+   * @param patientId ID of the patient
+   * @return patient dto if present
+   */
+  @Override
+  public PatientDto getRegisteredPatientById(Long patientId) {
+    log.info("Fetching registered patient with a given patient ID: {}", patientId);
+    //Check if patient is found else throw resource not found exception
+    Optional<Patient> optionalPatient = patientRepository.findById(patientId);
+    if(optionalPatient.isEmpty()){
+      throw new ResourceNotFoundException("Registered Patient", "id", String.valueOf(patientId));
+    }
+    return patientMapper.toDto(optionalPatient.get());
   }
 }

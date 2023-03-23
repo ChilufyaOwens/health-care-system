@@ -7,4 +7,5 @@ import java.util.List;
 public interface PatientRegistrationService {
   PatientDto registerPatient(PatientDto patientDto);
   List<PatientDto> getAllRegisteredPatients();
+  PatientDto getRegisteredPatientById(Long patientId);
 }
