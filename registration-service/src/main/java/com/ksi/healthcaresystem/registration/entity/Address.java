@@ -28,7 +28,7 @@ import lombok.ToString.Exclude;
 @Table(name = "patient_address")
 public class Address extends Auditable<Long>{
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)
   private Long id;
 

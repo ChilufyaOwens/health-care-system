@@ -7,12 +7,12 @@ import com.ksi.healthcaresystem.registration.mapper.AddressMapper;
 import com.ksi.healthcaresystem.registration.repository.AddressRepository;
 import com.ksi.healthcaresystem.registration.service.PatientAddressService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j(topic = "PATIENT_ADDRESS_SERVICE")
+@Log4j2(topic = "PATIENT_ADDRESS_SERVICE")
 public class PatientAddressServiceImpl implements PatientAddressService {
 
   private final AddressRepository addressRepository;

@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j(topic = "EMERGENCY_CONTACTS_SERVICE")
+@Log4j2(topic = "EMERGENCY_CONTACTS_SERVICE")
 public class EmergencyContactServiceImpl implements EmergencyContactService {
   private final EmergencyContactRepository emergencyContactRepository;
   private final EmergencyContactMapper emergencyContactMapper;
