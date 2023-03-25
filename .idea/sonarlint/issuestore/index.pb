@@ -27,8 +27,6 @@ L
 patient-care-service/pom.xml,c\f\cf24c77b23b52e50bcc2b1a76fe78d92d6521cbe
 P
  information-desk-service/pom.xml,1\a\1acb76b66e6536720b49eae01d57d5fb5a4cb653
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 L
 registration-service/pom.xml,c\e\ce13b7704c2f3808e8497bdd0d2142458caec255
 C

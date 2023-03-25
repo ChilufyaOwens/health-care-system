@@ -8,4 +8,5 @@ public interface PatientRegistrationService {
   PatientDto registerPatient(PatientDto patientDto);
   List<PatientDto> getAllRegisteredPatients();
   PatientDto getRegisteredPatientById(Long patientId);
+  void deleteRegisteredPatient(Long patientId);
 }
