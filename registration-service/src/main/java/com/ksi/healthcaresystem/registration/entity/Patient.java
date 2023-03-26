@@ -73,14 +73,20 @@ public class Patient extends Auditable<Long> {
   @Column(name = "marital_status")
   private MaritalStatus maritalStatus;
 
-  @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
   private Address address;
 
-  @OneToMany(mappedBy = "patient")
+  @OneToMany(mappedBy = "patient",
+      cascade = CascadeType.ALL,
+      fetch = FetchType.LAZY,
+      orphanRemoval = true)
   @Exclude
   private Set<EmergencyContact> emergencyContacts;
 
-  @OneToMany(mappedBy = "patient")
+  @OneToMany(mappedBy = "patient",
+      cascade = CascadeType.ALL,
+      fetch = FetchType.LAZY,
+      orphanRemoval = true)
   @Exclude
   private Set<Insurance> insurances;
 
