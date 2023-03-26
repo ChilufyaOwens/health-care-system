@@ -49,9 +49,7 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
     PatientDto savedPatient = patientMapper.toDto(registeredPatient);
 
     //Save patient address
-    AddressDto savedAddress = patientAddressService.savePatientAddress(
-        patientDto.getAddress(),
-        registeredPatient);
+    AddressDto savedAddress = patientAddressService.savePatientAddress(patientDto.getAddress(), registeredPatient);
     savedPatient.setAddress(savedAddress);
 
     //Save patient emergency contacts
@@ -61,10 +59,8 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
 
     //Save only if patient has insurance
     if (!patientDto.getInsurances().isEmpty()) {
-      List<InsuranceDto> insurances = patientInsuranceService.savePatientInsurances(patientDto
-          .getInsurances()
-          .stream()
-          .toList(), registeredPatient);
+      List<InsuranceDto> insurances = patientInsuranceService.savePatientInsurances(
+          patientDto.getInsurances().stream().toList(), registeredPatient);
       savedPatient.setInsurances(new HashSet<>(insurances));
     }
     return savedPatient;
@@ -72,25 +68,17 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
 
   /**
    * This method builds the patient object to be saved
+   *
    * @param mappedPatient mapped patient details
    * @return new patient
    */
   private static Patient getPatient(Patient mappedPatient) {
     //Get health care number
     String healthCareNumber = HealthCareNumberGenerator.generateHealthCareNumber();
-    return new Patient(
-        mappedPatient.getId(),
-        healthCareNumber,
-        mappedPatient.getFirstName(),
-        mappedPatient.getOtherName(),
-        mappedPatient.getLastName(),
-        mappedPatient.getDateOfBirth(),
-        mappedPatient.getIdentificationNumber(),
-        mappedPatient.getGender(),
-        mappedPatient.getContactNumber(),
-        mappedPatient.getEmail(),
-        mappedPatient.getMaritalStatus()
-    );
+    return new Patient(mappedPatient.getId(), healthCareNumber, mappedPatient.getFirstName(),
+        mappedPatient.getOtherName(), mappedPatient.getLastName(), mappedPatient.getDateOfBirth(),
+        mappedPatient.getIdentificationNumber(), mappedPatient.getGender(), mappedPatient.getContactNumber(),
+        mappedPatient.getEmail(), mappedPatient.getMaritalStatus());
   }
 
   /**
@@ -100,6 +88,7 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
    */
   @Override
   public List<PatientDto> getAllRegisteredPatients() {
+    log.info("Fetching all registered patients");
     List<Patient> patients = patientRepository.findAll();
     List<PatientDto> patientList = new ArrayList<>();
     patients.forEach(patient -> {
@@ -112,17 +101,54 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
 
   /**
    * This method gets registered pstient by patient ID
+   *
    * @param patientId ID of the patient
    * @return patient dto if present
    */
   @Override
   public PatientDto getRegisteredPatientById(Long patientId) {
-    log.info("Fetching registered patient with a given patient ID: {}", patientId);
+    log.info("Fetching patient with  ID: {}", patientId);
     //Check if patient is found else throw resource not found exception
     Optional<Patient> optionalPatient = patientRepository.findById(patientId);
-    if(optionalPatient.isEmpty()){
-      throw new ResourceNotFoundException("Registered Patient", "id", String.valueOf(patientId));
+    if (optionalPatient.isEmpty()) {
+      throw new ResourceNotFoundException("Patient", "id", String.valueOf(patientId));
     }
     return patientMapper.toDto(optionalPatient.get());
+  }
+
+  /**
+   * This method updates patients demographics
+   * @param patientId patient ID
+   * @param patientDto patient details
+   * @return updated patient record
+   */
+  @Override
+  public PatientDto updatePatientDemographics(Long patientId, PatientDto patientDto) {
+    Patient existingPatient = patientRepository.findById(patientId)
+        .orElseThrow(
+            ()-> new ResourceNotFoundException("Patient", "id", String.valueOf(patientId))
+        );
+    //Check if the contact number is present
+    if(!patientDto.getContactNumber().isEmpty()){
+      existingPatient.setContactNumber(patientDto.getContactNumber());
+    }
+    if(!patientDto.getEmail().isEmpty()){
+      existingPatient.setEmail(patientDto.getEmail());
+    }
+    return patientMapper.toDto(patientRepository.save(existingPatient));
+  }
+
+  /**
+   * This method deletes registered patient with the supplied patient Id
+   *
+   * @param patientId ID of the patient to be deleted
+   */
+  @Override
+  public void deleteRegisteredPatient(Long patientId) {
+    log.info("Deleting patient with ID: {}", patientId);
+    Optional<Patient> optionalPatient = patientRepository.findById(patientId);
+    optionalPatient.ifPresentOrElse(patientRepository::delete, () -> {
+      throw new ResourceNotFoundException("Patient", "id", String.valueOf(patientId));
+    });
   }
 }

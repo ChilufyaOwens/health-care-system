@@ -7,6 +7,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +23,8 @@ public class PatientRegistrationServiceController {
 
   /**
    * This API registers new patient
-   * @param patientDto
-   * @return
+   * @param patientDto patient details
+   * @return regitered patient
    */
   @PostMapping
   public ResponseEntity<PatientDto> registerPatient(@RequestBody @Valid PatientDto patientDto){
@@ -47,9 +48,22 @@ public class PatientRegistrationServiceController {
    * @return patient details
    */
   @GetMapping(value = "{id}")
-  public ResponseEntity<PatientDto> getRegisteredPatientById(@PathVariable("id") Long patientId){
+  public ResponseEntity<PatientDto> getRegisteredPatientById(@PathVariable(name = "id") Long patientId){
     PatientDto patientDto = patientRegistrationService.getRegisteredPatientById(patientId);
     return new ResponseEntity<>(patientDto, HttpStatus.OK);
+  }
+
+  /**
+   * This API deletes a registered patient
+   * @param patientId ID of a patient to be deleted
+   * @return success message
+   */
+  @DeleteMapping(value = "{id}")
+  public ResponseEntity<String> deletePatient(@PathVariable(name = "id") Long patientId){
+    //Delete patient with given id
+    patientRegistrationService.deleteRegisteredPatient(patientId);
+    return new ResponseEntity<>("Patient successfully deleted", HttpStatus.OK);
+
   }
 
 }
