@@ -1,6 +1,27 @@
-## application configuration properties
+#===========================
+# application configuration
+#===========================
 spring:
   application:
     name: patient-registration
   config:
     import: optional:configserver:http://localhost:8888
+  cache:
+    type: redis
+
+  #==========================
+#Configure redis cache
+#==========================
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: Kenzie@2022
+      username: cowens
+      repositories:
+        enabled: false
+
+
+
+
+

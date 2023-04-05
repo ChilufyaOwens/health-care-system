@@ -1,6 +1,4 @@
 
-é
-^config-server/src/main/java/com/ksi/healthcaresystem/configserver/ConfigServerApplication.java,d\c\dc1271b2dc9c2e3d8da021986251023a3b963dab
 D
 ward-service/pom.xml,e\5\e592b09d44d56aa17fc5077e494dc4e3296f1cba
 J
@@ -27,8 +25,6 @@ L
 patient-care-service/pom.xml,c\f\cf24c77b23b52e50bcc2b1a76fe78d92d6521cbe
 P
  information-desk-service/pom.xml,1\a\1acb76b66e6536720b49eae01d57d5fb5a4cb653
-L
-registration-service/pom.xml,c\e\ce13b7704c2f3808e8497bdd0d2142458caec255
 C
 bed-service/pom.xml,2\d\2da274e17c4df4baab764da48e50dae072d6ac89
 í
@@ -37,18 +33,12 @@ bbed-service/src/main/java/com/ksi/healthcaresystem/bedservice/controller/BedSer
 Sbed-service/src/main/java/com/ksi/healthcaresystem/bedservice/entity/Auditable.java,d\0\d05f70e6093a5be49c69d4dd76457fee34e680d5
 ô
 iregistration-service/src/main/java/com/ksi/healthcaresystem/registration/dto/constants/MaritalStatus.java,7\6\76201fcd9c03718ae2565662aa4b645d464b42d0
-í
-bregistration-service/src/main/java/com/ksi/healthcaresystem/registration/dto/constants/Gender.java,9\b\9badf024cecf501bdc361bde756fca23fe998438
 }
 Mbed-service/src/main/java/com/ksi/healthcaresystem/bedservice/entity/Bed.java,1\b\1b429dd7e52bedf60e387215c5433252a328037a
 à
 Xbed-service/src/main/java/com/ksi/healthcaresystem/bedservice/BedServiceApplication.java,7\f\7ffb3ec010602af826278f959aef12641248999d
 û
 nregistration-service/src/main/java/com/ksi/healthcaresystem/registration/exception/GlobalExceptionHandler.java,7\5\7530a3f8558fe3a84678e37dce4f214681c428ba
-ö
-jregistration-service/src/main/java/com/ksi/healthcaresystem/registration/repository/PatientRepository.java,e\4\e4bb0bc078edbce78cc6fe32f4e2aabfab777e73
-í
-bregistration-service/src/main/java/com/ksi/healthcaresystem/registration/mapper/PatientMapper.java,6\b\6bdd44a8d831f91c61703f7f58b64de0a94cd0ff
 É
 Sbed-service/src/main/java/com/ksi/healthcaresystem/bedservice/mapper/BedMapper.java,e\2\e2a7f6298a2c3458254515b81689f622456065ad
 î
@@ -61,3 +51,21 @@ bregistration-service/src/main/java/com/ksi/healthcaresystem/registration/mapper
 ^registration-service/src/main/java/com/ksi/healthcaresystem/registration/dto/InsuranceDto.java,2\2\221aa4855963e614a4ca1491bdacb4aa36c447e0
 å
 \registration-service/src/main/java/com/ksi/healthcaresystem/registration/dto/AddressDto.java,6\9\69bec0412ceb896ecb3d1e1a2f06087bd23f6bcf
+•
+uregistration-service/src/main/java/com/ksi/healthcaresystem/registration/service/utils/HealthCareNumberGenerator.java,0\4\04d952dc9d5fabb84b62061e9225c7e844e2792d
+ù
+mregistration-service/src/main/java/com/ksi/healthcaresystem/registration/service/EmergencyContactService.java,d\0\d0ce057dd7dc22cc7fb79cf5bf927de181d7d1af
+ù
+mregistration-service/src/main/java/com/ksi/healthcaresystem/registration/service/PatientInsuranceService.java,f\f\ffab8998f2d1deb32c87de3227e9fc6806f47749
+õ
+kregistration-service/src/main/java/com/ksi/healthcaresystem/registration/service/PatientAddressService.java,9\7\971bff4546eae5b4db3fea3c1a6a5fb5f3dbe147
+¶
+vregistration-service/src/main/java/com/ksi/healthcaresystem/registration/service/impl/PatientInsuranceServiceImpl.java,7\3\732d6be6a5f1b58ad575a441b802ab5278be0d5f
+L
+notification-service/pom.xml,0\1\01f9e880c9ba9f01d23d7605950269a1f1661129
+í
+bregistration-service/src/main/java/com/ksi/healthcaresystem/registration/dto/constants/Gender.java,9\b\9badf024cecf501bdc361bde756fca23fe998438
+é
+^bed-service/src/main/java/com/ksi/healthcaresystem/bedservice/service/impl/BedServiceImpl.java,6\d\6dd30daec7648e07d8202b35337c37c8fe3faf93
+è
+_commons/src/main/java/com/ksi/healthcaresystem/commons/exception/ResourceNotFoundException.java,f\f\fffb6f078dfeadab702642a622caf12e7d2f4fe9
