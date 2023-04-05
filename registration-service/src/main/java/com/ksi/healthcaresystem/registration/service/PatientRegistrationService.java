@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PatientRegistrationService {
   PatientDto registerPatient(PatientDto patientDto);
-  List<PatientDto> getAllRegisteredPatients();
+  List<PatientDto> getAllRegisteredPatients(Integer page, Integer size);
   PatientDto getRegisteredPatientById(Long patientId);
   void deleteRegisteredPatient(Long patientId);
 }
