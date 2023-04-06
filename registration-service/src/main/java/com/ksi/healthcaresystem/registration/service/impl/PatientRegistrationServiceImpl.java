@@ -9,16 +9,20 @@ import com.ksi.healthcaresystem.registration.entity.Patient;
 import com.ksi.healthcaresystem.registration.mapper.PatientMapper;
 import com.ksi.healthcaresystem.registration.repository.PatientRepository;
 import com.ksi.healthcaresystem.registration.service.EmergencyContactService;
+import com.ksi.healthcaresystem.registration.service.HealCareNumberGeneratorService;
 import com.ksi.healthcaresystem.registration.service.PatientAddressService;
 import com.ksi.healthcaresystem.registration.service.PatientInsuranceService;
 import com.ksi.healthcaresystem.registration.service.PatientRegistrationService;
-import com.ksi.healthcaresystem.registration.service.utils.HealthCareNumberGenerator;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,6 +35,8 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
   private final PatientAddressService patientAddressService;
   private final EmergencyContactService emergencyContactService;
   private final PatientInsuranceService patientInsuranceService;
+  private final HealCareNumberGeneratorService healCareNumberGeneratorService;
+
 
   /**
    * This method registers new patient
@@ -44,6 +50,7 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
     Patient mappedPatient = patientMapper.toEntity(patientDto);
     //Create a patient object
     Patient patient = getPatient(mappedPatient);
+    patient.setHealthCareNumber(healCareNumberGeneratorService.generatePatientHealthCareNumber());
 
     Patient registeredPatient = patientRepository.save(patient);
     PatientDto savedPatient = patientMapper.toDto(registeredPatient);
@@ -74,8 +81,7 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
    */
   private static Patient getPatient(Patient mappedPatient) {
     //Get health care number
-    String healthCareNumber = HealthCareNumberGenerator.generateHealthCareNumber();
-    return new Patient(mappedPatient.getId(), healthCareNumber, mappedPatient.getFirstName(),
+    return new Patient(mappedPatient.getId(), mappedPatient.getHealthCareNumber(), mappedPatient.getFirstName(),
         mappedPatient.getOtherName(), mappedPatient.getLastName(), mappedPatient.getDateOfBirth(),
         mappedPatient.getIdentificationNumber(), mappedPatient.getGender(), mappedPatient.getContactNumber(),
         mappedPatient.getEmail(), mappedPatient.getMaritalStatus());
@@ -87,9 +93,10 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
    * @return list of all registered patients
    */
   @Override
-  public List<PatientDto> getAllRegisteredPatients() {
+  public List<PatientDto> getAllRegisteredPatients(Integer page, Integer size) {
     log.info("Fetching all registered patients");
-    List<Patient> patients = patientRepository.findAll();
+    Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
+    Page<Patient> patients = patientRepository.findAll(pageable);
     List<PatientDto> patientList = new ArrayList<>();
     patients.forEach(patient -> {
       PatientDto patientDto = patientMapper.toDto(patient);
@@ -100,20 +107,26 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
   }
 
   /**
-   * This method gets registered pstient by patient ID
+   * This method checks if registered patient record with given id is present in the redis cache, if patient record is
+   * present in the cache, return that record, if not present, get the record from the database, insert the new record
+   * in the redis cache and return patient record to the user.
    *
    * @param patientId ID of the patient
-   * @return patient dto if present
+   * @return patient record or throw a resource not found exception
    */
   @Override
   public PatientDto getRegisteredPatientById(Long patientId) {
     log.info("Fetching patient with  ID: {}", patientId);
-    //Check if patient is found else throw resource not found exception
-    Optional<Patient> optionalPatient = patientRepository.findById(patientId);
-    if (optionalPatient.isEmpty()) {
-      throw new ResourceNotFoundException("Patient", "id", String.valueOf(patientId));
-    }
-    return patientMapper.toDto(optionalPatient.get());
+
+
+      final Optional<Patient> optionalPatient = patientRepository.findById(patientId);
+      if (optionalPatient.isEmpty()) {
+        throw new ResourceNotFoundException("Patient", "id", String.valueOf(patientId));
+      }
+      //Save patient record in a redis cache
+      log.info("Patient registration service findById() : cache insert -> {}",
+          patientMapper.toDto(optionalPatient.get()));
+       return patientMapper.toDto(optionalPatient.get());
   }
 
   /**
@@ -143,6 +156,7 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
    *
    * @param patientId ID of the patient to be deleted
    */
+
   @Override
   public void deleteRegisteredPatient(Long patientId) {
     log.info("Deleting patient with ID: {}", patientId);
