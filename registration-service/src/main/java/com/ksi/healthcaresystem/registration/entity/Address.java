@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.ToString.Exclude;
+import org.springframework.data.redis.core.RedisHash;
 
 @Getter
 @Setter
@@ -28,7 +29,7 @@ import lombok.ToString.Exclude;
 @Table(name = "patient_address")
 public class Address extends Auditable<Long>{
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)
   private Long id;
 
