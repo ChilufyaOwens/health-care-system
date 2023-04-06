@@ -9,22 +9,20 @@ import com.ksi.healthcaresystem.registration.entity.Patient;
 import com.ksi.healthcaresystem.registration.mapper.PatientMapper;
 import com.ksi.healthcaresystem.registration.repository.PatientRepository;
 import com.ksi.healthcaresystem.registration.service.EmergencyContactService;
+import com.ksi.healthcaresystem.registration.service.HealCareNumberGeneratorService;
 import com.ksi.healthcaresystem.registration.service.PatientAddressService;
 import com.ksi.healthcaresystem.registration.service.PatientInsuranceService;
 import com.ksi.healthcaresystem.registration.service.PatientRegistrationService;
-import com.ksi.healthcaresystem.registration.service.utils.HealthCareNumberGenerator;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,7 +35,8 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
   private final PatientAddressService patientAddressService;
   private final EmergencyContactService emergencyContactService;
   private final PatientInsuranceService patientInsuranceService;
-  private final RedisTemplate<String, PatientDto> redisTemplate;
+  private final HealCareNumberGeneratorService healCareNumberGeneratorService;
+
 
   /**
    * This method registers new patient
@@ -51,6 +50,7 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
     Patient mappedPatient = patientMapper.toEntity(patientDto);
     //Create a patient object
     Patient patient = getPatient(mappedPatient);
+    patient.setHealthCareNumber(healCareNumberGeneratorService.generatePatientHealthCareNumber());
 
     Patient registeredPatient = patientRepository.save(patient);
     PatientDto savedPatient = patientMapper.toDto(registeredPatient);
@@ -81,8 +81,7 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
    */
   private static Patient getPatient(Patient mappedPatient) {
     //Get health care number
-    String healthCareNumber = HealthCareNumberGenerator.generateHealthCareNumber();
-    return new Patient(mappedPatient.getId(), healthCareNumber, mappedPatient.getFirstName(),
+    return new Patient(mappedPatient.getId(), mappedPatient.getHealthCareNumber(), mappedPatient.getFirstName(),
         mappedPatient.getOtherName(), mappedPatient.getLastName(), mappedPatient.getDateOfBirth(),
         mappedPatient.getIdentificationNumber(), mappedPatient.getGender(), mappedPatient.getContactNumber(),
         mappedPatient.getEmail(), mappedPatient.getMaritalStatus());
@@ -119,21 +118,15 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
   public PatientDto getRegisteredPatientById(Long patientId) {
     log.info("Fetching patient with  ID: {}", patientId);
 
-    String key = "patient:" + patientId;
-    PatientDto patient = redisTemplate.opsForValue().get(key);
-    if (patient == null) {
 
       final Optional<Patient> optionalPatient = patientRepository.findById(patientId);
       if (optionalPatient.isEmpty()) {
         throw new ResourceNotFoundException("Patient", "id", String.valueOf(patientId));
       }
       //Save patient record in a redis cache
-      redisTemplate.opsForValue().set(key, patientMapper.toDto(optionalPatient.get()), 10, TimeUnit.SECONDS);
       log.info("Patient registration service findById() : cache insert -> {}",
           patientMapper.toDto(optionalPatient.get()));
-      patient = patientMapper.toDto(optionalPatient.get());
-    }
-    return patient;
+       return patientMapper.toDto(optionalPatient.get());
   }
 
   /**
@@ -145,12 +138,6 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
   @Override
   public void deleteRegisteredPatient(Long patientId) {
     log.info("Deleting patient with ID: {}", patientId);
-    final String key = "patient_" + patientId;
-    boolean hasKey = Boolean.TRUE.equals(redisTemplate.hasKey(key));
-    if (hasKey) {
-      redisTemplate.delete(key);
-      log.info("Patient registration service delete patient -> {}", patientId);
-    }
     Optional<Patient> optionalPatient = patientRepository.findById(patientId);
     optionalPatient.ifPresentOrElse(patientRepository::delete, () -> {
       throw new ResourceNotFoundException("Patient", "id", String.valueOf(patientId));

@@ -24,7 +24,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.ToString.Exclude;
-import org.springframework.data.redis.core.RedisHash;
 
 @Getter
 @Setter

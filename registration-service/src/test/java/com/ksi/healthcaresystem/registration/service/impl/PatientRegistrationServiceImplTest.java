@@ -2,97 +2,114 @@ package com.ksi.healthcaresystem.registration.service.impl;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 
 import com.ksi.healthcaresystem.registration.dto.AddressDto;
 import com.ksi.healthcaresystem.registration.dto.PatientDto;
+import com.ksi.healthcaresystem.registration.dto.constants.Gender;
+import com.ksi.healthcaresystem.registration.dto.constants.MaritalStatus;
+import com.ksi.healthcaresystem.registration.entity.Address;
 import com.ksi.healthcaresystem.registration.entity.Patient;
 import com.ksi.healthcaresystem.registration.mapper.PatientMapper;
 import com.ksi.healthcaresystem.registration.repository.PatientRepository;
-import org.junit.jupiter.api.BeforeEach;
+import com.ksi.healthcaresystem.registration.service.EmergencyContactService;
+import com.ksi.healthcaresystem.registration.service.HealCareNumberGeneratorService;
+import com.ksi.healthcaresystem.registration.service.PatientAddressService;
+import com.ksi.healthcaresystem.registration.service.PatientInsuranceService;
+import com.ksi.healthcaresystem.registration.service.utils.EmailValidator;
+import java.time.LocalDate;
+import java.util.Optional;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mapstruct.factory.Mappers;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class PatientRegistrationServiceImplTest {
 
   @Mock
-  private PatientRepository patientRepository;
-
+  PatientRepository patientRepository;
   @Mock
-  private PatientRegistrationServiceImpl patientRegistrationService;
+  PatientMapper patientMapper;
+  @Mock
+  PatientAddressService patientAddressService;
+  @Mock
+  EmergencyContactService emergencyContactService;
+  @Mock
+  PatientInsuranceService patientInsuranceService;
+  @Mock
+  HealCareNumberGeneratorService healCareNumberGeneratorService;
 
-  @Spy
-  @InjectMocks
-  private PatientMapper patientMapper = Mappers.getMapper(PatientMapper.class);
+  @Test
+  @DisplayName("Test should pass when a patient is registered")
+  void shouldRegisterPatient() {
+  }
 
-  private PatientDto patientDto;
-  private AddressDto addressDto;
+  @Test
+  @DisplayName("Test should throw an invalid email exception when email is not valid")
+  void shouldFailToRegisterPatientWhenEmailIsInvalid() {
+    assertThat(EmailValidator.isValidEmail("chilufya.kenzie@zra.com")).isTrue();
+  }
 
-
-  @BeforeEach
-  public void setup(){
-
-    //Set up address
-    addressDto = AddressDto.builder()
-        .streetAddressLineOne("Plot 83, Foxdale")
-        .city("Lusaka")
-        .build();
-
-    patientDto = PatientDto.builder()
-        .id(1L)
-        .firstName("Chilufya")
-        .lastName("Owens")
-        .gender("Male")
-        .dateOfBirth("01/10/2020")
+  @Test
+  @DisplayName("Should find registered patient by ID")
+  void shouldFindRegisteredPatientById() {
+    PatientRegistrationServiceImpl patientRegistrationService = new PatientRegistrationServiceImpl(
+        patientRepository,
+        patientMapper,
+        patientAddressService,
+        emergencyContactService,
+        patientInsuranceService,
+        healCareNumberGeneratorService
+    );
+    Patient patient = Patient.builder()
+        .healthCareNumber("1223234232")
         .contactNumber("0963381206")
-        .healthCareNumber("132042023")
-        .maritalStatus("Single")
+        .firstName("Chilufya")
+        .gender(Gender.MALE)
+        .identificationNumber("293267/66/1")
+        .lastName("Kenzie")
+        .maritalStatus(MaritalStatus.MARRIED)
+        .email("chilufyaowens@gmail.com")
+        .otherName("Owens")
+        .dateOfBirth(LocalDate.of(2020, 10, 23))
+        .address(
+            Address.builder()
+                .city("Lusaka")
+                .streetAddressLineOne("Plot no. 83 Foxdale")
+                .stateProvince("Lusaka")
+                .country("Zambia")
+                .build())
         .build();
-  }
+    Mockito.when(patientRepository.findById(12L)).thenReturn(Optional.of(
+        patient));
+    PatientDto expectedPatientResponse = PatientDto.builder()
+        .firstName("Chilufya")
+        .lastName("Kenzie")
+        .otherName("Owens")
+        .email("chilufyaowens@gmail.com")
+        .contactNumber("0963381206")
+        .maritalStatus(MaritalStatus.DIVORCED.getStatusCode())
+        .gender(Gender.MALE.getGender())
+        .identificationNumber("293267/66/1")
+        .dateOfBirth("01/01/2020")
+        .address(AddressDto.builder()
+            .city("Lusaka")
+            .country("Zambia")
+            .streetAddressLineOne("Plot no. 83 Foxdale")
+            .country("Zambia")
+            .stateProvince("Lusaka")
+            .id(1L)
+            .build())
+        .build();
+    Mockito.when(patientMapper.toDto(Mockito.any(Patient.class))).thenReturn(
+        expectedPatientResponse
+    );
 
-  @Test
-  @DisplayName("Test for registering a new patient")
-  void givenPatientObject_whenRegisterPatient_thenReturnPatientObject(){
-    //given - precondition test
-    Patient patient = patientMapper.toEntity(patientDto);
-
-    given(patientRepository.findPatientByHealthCareNumber(patientDto.getHealthCareNumber()))
-        .willReturn(null);
-
-    given(patientRepository.save(patient)).willReturn(patient);
-
-    //when - action or behaviour that we are going to test
-    Patient savedPatient = patientRepository.save(patient);
-
-    //then - verify the output
-    assertThat(savedPatient).isNotNull();
-
-  }
-
-  PatientRegistrationServiceImplTest() {
-  }
-
-  @Test
-  @DisplayName("Test should when resource not found")
-  void resourceNotFoundExceptionTest(){
-
-  }
-  @Test
-  @DisplayName("Test should fail when email address is not valid")
-  void emailAddressNotValidTest() {
-    PatientDto patientDto = new PatientDto();
-  }
-
-  @Test
-  @DisplayName("Test should fail when patient address is null")
-  void addressNotNullTest(){
-    AddressDto addressDto = new AddressDto();
+    PatientDto actualPatientResponse = patientRegistrationService.getRegisteredPatientById(12L);
+    Assertions.assertThat(actualPatientResponse.getId()).isEqualTo(expectedPatientResponse.getId());
+    Assertions.assertThat(actualPatientResponse.getFirstName()).isEqualTo(expectedPatientResponse.getFirstName());
   }
 }
