@@ -1,13 +1,16 @@
-## server and datasource configuration
+#==========================
+#application configurations
+#==========================
+spring:
+  config:
+    activate:
+      on-profile: docker
+    import: "optional:configserver:http://config-service:8888"
+---
 spring:
   application:
     name: bed-service
   config:
-    import: optional:configserver:http://localhost:8888
+    import: "optional:configserver:http://localhost:8888"
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health
-#rabbitmq configurations
+
