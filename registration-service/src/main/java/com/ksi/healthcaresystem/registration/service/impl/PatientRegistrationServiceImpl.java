@@ -1,29 +1,28 @@
 package com.ksi.healthcaresystem.registration.service.impl;
 
-import com.ksi.healthcaresystem.commons.exception.ResourceNotFoundException;
+import com.ksi.healthcaresystem.commons.exceptions.ResourceNotFoundException;
 import com.ksi.healthcaresystem.registration.dto.AddressDto;
 import com.ksi.healthcaresystem.registration.dto.EmergencyContactDto;
 import com.ksi.healthcaresystem.registration.dto.InsuranceDto;
 import com.ksi.healthcaresystem.registration.dto.PatientDto;
 import com.ksi.healthcaresystem.registration.entity.Patient;
+import com.ksi.healthcaresystem.registration.event.PatientRegistrationEvent;
 import com.ksi.healthcaresystem.registration.mapper.PatientMapper;
 import com.ksi.healthcaresystem.registration.repository.PatientRepository;
-import com.ksi.healthcaresystem.registration.service.EmergencyContactService;
-import com.ksi.healthcaresystem.registration.service.HealCareNumberGeneratorService;
-import com.ksi.healthcaresystem.registration.service.PatientAddressService;
-import com.ksi.healthcaresystem.registration.service.PatientInsuranceService;
-import com.ksi.healthcaresystem.registration.service.PatientRegistrationService;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import com.ksi.healthcaresystem.registration.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +35,7 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
   private final EmergencyContactService emergencyContactService;
   private final PatientInsuranceService patientInsuranceService;
   private final HealCareNumberGeneratorService healCareNumberGeneratorService;
+  private final ApplicationEventPublisher eventPublisher;
 
 
   /**
@@ -70,6 +70,8 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
           patientDto.getInsurances().stream().toList(), registeredPatient);
       savedPatient.setInsurances(new HashSet<>(insurances));
     }
+
+    eventPublisher.publishEvent( new PatientRegistrationEvent(this, savedPatient));
     return savedPatient;
   }
 

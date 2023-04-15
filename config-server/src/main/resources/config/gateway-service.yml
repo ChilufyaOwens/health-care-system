@@ -1,0 +1,49 @@
+#=========================
+#application configuration
+#=========================
+server:
+  port: 9191
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId:-},%X{spanId:-}] ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+spring:
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: bed-service
+          uri: lb://bed-service
+          predicates:
+            - Path=/api/v1/beds/**
+        - id: registration-service
+          uri: lb://registration-service
+          predicates:
+            - Path=/api/v1/registrations/**
+
+#======================
+#tracing configurations
+#======================
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+#===========================
+#eureka server configuration
+#===========================
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+

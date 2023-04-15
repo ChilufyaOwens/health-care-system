@@ -8,7 +8,7 @@ import com.ksi.healthcaresystem.bedservice.mapper.BedMapper;
 import com.ksi.healthcaresystem.bedservice.repository.BedRepository;
 import com.ksi.healthcaresystem.bedservice.service.BedService;
 import com.ksi.healthcaresystem.commons.constants.Status;
-import com.ksi.healthcaresystem.commons.exception.ResourceNotFoundException;
+import com.ksi.healthcaresystem.commons.exceptions.ResourceNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
