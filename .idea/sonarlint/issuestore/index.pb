@@ -81,8 +81,6 @@ tregistration-service/src/main/java/com/ksi/healthcaresystem/registration/servic
 vregistration-service/src/main/java/com/ksi/healthcaresystem/registration/service/impl/EmergencyContactServiceImpl.java,d\d\ddc402bc95d430fca381c9e2e9d57678945bf285
 ­
 }registration-service/src/main/java/com/ksi/healthcaresystem/registration/service/impl/HealCareNumberGeneratorServiceImpl.java,6\3\63836e00c442605262b11134ee46bcd4e5c3df45
-­
-}registration-service/src/test/java/com/ksi/healthcaresystem/registration/service/impl/PatientRegistrationServiceImplTest.java,0\9\09f46d69bb8c8d5fe300d4a2aaa4ffaf8e8dae9e
 H
 service-registry/pom.xml,c\8\c838103466e7455490125db06ce61e4ea301ce49
 Ž
