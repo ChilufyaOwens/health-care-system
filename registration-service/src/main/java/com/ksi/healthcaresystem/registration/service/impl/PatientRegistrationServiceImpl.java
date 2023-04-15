@@ -1,6 +1,7 @@
 package com.ksi.healthcaresystem.registration.service.impl;
 
-import com.ksi.healthcaresystem.commons.exception.ResourceNotFoundException;
+import com.ksi.healthcaresystem.commons.events.HealthCareSystemEvent;
+import com.ksi.healthcaresystem.commons.exceptions.ResourceNotFoundException;
 import com.ksi.healthcaresystem.registration.dto.AddressDto;
 import com.ksi.healthcaresystem.registration.dto.EmergencyContactDto;
 import com.ksi.healthcaresystem.registration.dto.InsuranceDto;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +38,8 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
   private final EmergencyContactService emergencyContactService;
   private final PatientInsuranceService patientInsuranceService;
   private final HealCareNumberGeneratorService healCareNumberGeneratorService;
+  private final ApplicationEventPublisher eventPublisher;
+  private final HealthCareSystemEvent<PatientDto> patientDtoHealthCareSystemEvent;
 
 
   /**
@@ -70,6 +74,7 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
           patientDto.getInsurances().stream().toList(), registeredPatient);
       savedPatient.setInsurances(new HashSet<>(insurances));
     }
+    eventPublisher.publishEvent( new HealthCareSystemEvent<>(this, savedPatient));
     return savedPatient;
   }
 

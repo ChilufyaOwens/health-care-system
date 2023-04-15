@@ -2,7 +2,7 @@ package com.ksi.healthcaresystem.registration.exception;
 
 import com.ksi.healthcaresystem.commons.constants.ExceptionCode;
 import com.ksi.healthcaresystem.commons.dto.ErrorDetails;
-import com.ksi.healthcaresystem.commons.exception.ResourceNotFoundException;
+import com.ksi.healthcaresystem.commons.exceptions.ResourceNotFoundException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;

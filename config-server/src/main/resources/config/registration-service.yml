@@ -33,6 +33,25 @@ management:
     sampling:
       probability: 1.0
 
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId:-},%X{spanId:-}] ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+---
+#====================
+#Kafka configurations
+#====================
+spring:
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    consumer:
+      auto-offset-reset: earliest
+      group-id: "healthcare-notification"
+---
+spring:
+  kafka:
+    template:
+      default-topic: "notification"
+
 #=====================
 #eureka configurations
 #=====================
@@ -48,6 +67,4 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
 
-logging:
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId:-},%X{spanId:-}] ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+

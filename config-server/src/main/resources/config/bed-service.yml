@@ -20,6 +20,18 @@ spring:
   cloud:
     discovery:
       enabled: true
+  output:
+    ansi:
+      enabled: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  tracing:
+    sampling:
+      probability: 1.0
 
 #===========================
 #eureka client configuration

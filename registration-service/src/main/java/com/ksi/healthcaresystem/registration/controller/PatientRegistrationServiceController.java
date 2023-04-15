@@ -1,12 +1,11 @@
 package com.ksi.healthcaresystem.registration.controller;
 
-import com.ksi.healthcaresystem.commons.util.ResponseUtils;
+import com.ksi.healthcaresystem.commons.utils.ResponseUtils;
 import com.ksi.healthcaresystem.registration.dto.PatientDto;
 import com.ksi.healthcaresystem.registration.service.PatientRegistrationService;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
