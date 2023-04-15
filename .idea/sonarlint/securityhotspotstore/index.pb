@@ -67,8 +67,6 @@ jregistration-service/src/main/java/com/ksi/healthcaresystem/registration/servic
 jregistration-service/src/main/java/com/ksi/healthcaresystem/registration/repository/PatientRepository.java,e\4\e4bb0bc078edbce78cc6fe32f4e2aabfab777e73
 ¨
 xregistration-service/src/main/java/com/ksi/healthcaresystem/registration/repository/PatientHealCareNumberRepository.java,5\1\517c07c2e73dc956b0d0f18d5c0bb6e552c44b26
-š
-jregistration-service/src/main/java/com/ksi/healthcaresystem/registration/entity/PatientHealCareNumber.java,4\b\4ba285e73cef20dbd48c37e4a980834ddff31311
 ¬
 |registration-service/src/main/java/com/ksi/healthcaresystem/registration/service/utils/PatientHealthCareNumberGenerator.java,6\2\6227e66996618cb60dbdad7f0c625a50315b0334
 E
