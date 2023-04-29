@@ -26,7 +26,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
      * @throws MessagingException exception
      */
     @Override
-    public void sendEmail(String recipientEmail, String subject, String message) throws MessagingException {
+    public void sendRegistrationConfirmationEmail(String recipientEmail, String subject, String message) throws MessagingException {
         log.info("Sending mail to {} and subject {}", recipientEmail, subject);
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
@@ -47,7 +47,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
      * @throws MessagingException messaging exception
      */
     @Override
-    public void sendEmail(String recipientEmail, String subject, String message, List<File> attachments) throws MessagingException {
+    public void sendRegistrationConfirmationEmail(String recipientEmail, String subject, String message, List<File> attachments) throws MessagingException {
         log.info("Sending mail to {} and subject {}", recipientEmail, subject);
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);

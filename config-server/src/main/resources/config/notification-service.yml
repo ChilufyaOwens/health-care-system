@@ -68,7 +68,7 @@ logging:
 #====================
 spring:
   mail:
-    host: "smtp.gmail.com"
-    port: 587
-    username: "ksidevsofts@gmail.com"
-    password: "AuhYcWwRHwy2xQY"
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    username: 5c683c605c1ae3
+    password: 7d6d4b84ecdf9d

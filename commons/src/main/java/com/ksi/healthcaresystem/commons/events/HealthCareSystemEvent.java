@@ -10,8 +10,7 @@ import org.springframework.core.ResolvableTypeProvider;
 @AllArgsConstructor
 @ToString
 public class HealthCareSystemEvent<T> implements ResolvableTypeProvider {
-    private Object source;
-    private T message;
+    private final T source;
     @Override
     public ResolvableType getResolvableType() {
         return ResolvableType.forClassWithGenerics(

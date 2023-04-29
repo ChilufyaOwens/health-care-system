@@ -50,7 +50,7 @@ spring:
 spring:
   kafka:
     template:
-      default-topic: "notification"
+      default-topic: "healthcare-notification-topic"
 
 #=====================
 #eureka configurations

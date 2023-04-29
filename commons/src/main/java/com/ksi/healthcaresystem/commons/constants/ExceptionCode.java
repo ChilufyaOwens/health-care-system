@@ -1,6 +1,5 @@
 package com.ksi.healthcaresystem.commons.constants;
 
-import ch.qos.logback.classic.Level;
 
 public enum ExceptionCode {
   BED_NOT_FOUND,
