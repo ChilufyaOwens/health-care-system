@@ -1,6 +1,5 @@
 package com.ksi.healthcaresystem.registration.config.kafka;
 
-import com.ksi.healthcaresystem.commons.dto.MessageDto;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +20,7 @@ public class RegistrationServiceProducerConfig {
     private String healthcareKafkaBootstrapServers;
 
     @Bean
-    public ProducerFactory<String, MessageDto> messageDtoProducerFactory(){
+    public ProducerFactory<String, Object> messageDtoProducerFactory(){
         return new DefaultKafkaProducerFactory<>(producerProps());
     }
 
@@ -35,7 +34,7 @@ public class RegistrationServiceProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, MessageDto> kafkaTemplate(ProducerFactory<String, MessageDto> producerFactory){
-        return new KafkaTemplate<>(producerFactory);
+    public KafkaTemplate<String, Object> kafkaTemplate(){
+        return new KafkaTemplate<>(messageDtoProducerFactory());
     }
 }

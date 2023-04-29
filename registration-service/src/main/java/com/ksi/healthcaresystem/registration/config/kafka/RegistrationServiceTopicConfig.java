@@ -25,7 +25,7 @@ public class RegistrationServiceTopicConfig {
 
     @Bean
     public NewTopic topic(){
-        return TopicBuilder.name("")
+        return TopicBuilder.name("NOTIFICATION")
                 .partitions(10)
                 .replicas(1)
                 .build();

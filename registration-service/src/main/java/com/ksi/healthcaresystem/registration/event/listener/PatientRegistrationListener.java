@@ -5,6 +5,7 @@ import com.ksi.healthcaresystem.commons.dto.MessageDto;
 import com.ksi.healthcaresystem.commons.events.HealthCareSystemEvent;
 import com.ksi.healthcaresystem.registration.dto.PatientDto;
 import com.ksi.healthcaresystem.registration.entity.RegistrationMessage;
+import com.ksi.healthcaresystem.registration.event.PatientRegistrationEvent;
 import com.ksi.healthcaresystem.registration.repository.RegistrationMessageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -20,15 +21,16 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 @Log4j2(topic = "PATIENT_REGISTRATION_LISTENER")
 public class PatientRegistrationListener {
-    private final KafkaTemplate<String, MessageDto> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
     private final RegistrationMessageRepository messageRepository;
 
     @Value("${spring.kafka.template.default-topic}")
     private String topicName;
 
     @EventListener
-    public void sendEmail(HealthCareSystemEvent event) {
-        PatientDto patientDto = (PatientDto) event.getMessage();
+    public void sendEmail(HealthCareSystemEvent<PatientRegistrationEvent> event) {
+        PatientRegistrationEvent patientRegistrationEvent = event.getSource();
+        PatientDto patientDto = patientRegistrationEvent.getMessage();
         if (patientDto == null) {
             return;
         }
@@ -44,13 +46,13 @@ public class PatientRegistrationListener {
         RegistrationMessage registrationMessage = savePatientRegistrationSentMessage(messageDto);
 
         //publish message to the kafka broker
-        CompletableFuture<SendResult<String, MessageDto>> future = kafkaTemplate.send(
+        CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send(
                 topicName,
                 messageDto
         );
         future.whenComplete((result, exception) -> {
             if (exception == null) {
-                log.info("Message sent -> {}, with offset -> {}", messageDto, result.getRecordMetadata().offset());
+                log.info("Message sent -> {}, to topic -> {}, with offset -> {}", messageDto, topicName, result.getRecordMetadata().offset());
                 //Update message sent status
                 registrationMessage.setStatus(Status.PROCESSED.getStatusCode());
             } else {

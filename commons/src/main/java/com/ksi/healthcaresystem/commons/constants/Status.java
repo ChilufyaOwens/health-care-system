@@ -12,6 +12,7 @@ public enum Status {
   OCCUPIED("Occupied"),
   TAKEN("Taken"),
   PROCESSED("Processed"),
-  FAILED("Failed");
+  FAILED("Failed"),
+  SENT("Sent");
   private String statusCode;
 }

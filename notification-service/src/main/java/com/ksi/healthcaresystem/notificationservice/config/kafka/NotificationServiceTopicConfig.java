@@ -19,15 +19,15 @@ public class NotificationServiceTopicConfig {
 
     @Bean
     public KafkaAdmin kafkaAdmin(){
-        Map<String, Object> configs = new HashMap<>();
-        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, healthcareKafkaBootstrapServers);
-        return new KafkaAdmin(configs);
+        Map<String, Object> props = new HashMap<>();
+        props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, healthcareKafkaBootstrapServers);
+        return new KafkaAdmin(props);
     }
 
     @Bean
     public NewTopic topic(){
-        return TopicBuilder.name("notification")
-                .partitions(10)
+        return TopicBuilder.name("healthcare-notification-topic")
+                .partitions(1)
                 .replicas(1)
                 .build();
     }

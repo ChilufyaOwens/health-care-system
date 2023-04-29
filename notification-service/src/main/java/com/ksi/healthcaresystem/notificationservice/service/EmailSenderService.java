@@ -6,6 +6,6 @@ import java.io.File;
 import java.util.List;
 
 public interface EmailSenderService {
-    void sendEmail(String recipientEmail, String subject, String message) throws MessagingException;
-    void sendEmail(String recipientEmail, String subject, String message, List<File> attachments) throws MessagingException;
+    void sendRegistrationConfirmationEmail(String recipientEmail, String subject, String message) throws MessagingException;
+    void sendRegistrationConfirmationEmail(String recipientEmail, String subject, String message, List<File> attachments) throws MessagingException;
 }
