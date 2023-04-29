@@ -7,9 +7,9 @@ import com.ksi.healthcaresystem.notificationservice.event.EmailSenderEvent;
 import com.ksi.healthcaresystem.notificationservice.mapper.EmailDetailsMapper;
 import com.ksi.healthcaresystem.notificationservice.repository.EmailDetailsRepository;
 import com.ksi.healthcaresystem.notificationservice.service.EmailDetailsService;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
