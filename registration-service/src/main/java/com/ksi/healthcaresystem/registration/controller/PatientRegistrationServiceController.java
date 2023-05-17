@@ -1,5 +1,6 @@
 package com.ksi.healthcaresystem.registration.controller;
 
+import com.ksi.healthcaresystem.commons.dto.ApiResponse;
 import com.ksi.healthcaresystem.commons.utils.ResponseUtils;
 import com.ksi.healthcaresystem.registration.dto.PatientDto;
 import com.ksi.healthcaresystem.registration.service.PatientRegistrationService;
@@ -31,8 +32,8 @@ public class PatientRegistrationServiceController {
    * @return regitered patient
    */
   @PostMapping
-  public ResponseEntity<PatientDto> registerPatient(@RequestBody @Valid PatientDto patientDto) {
-    PatientDto registeredPatient = patientRegistrationService.registerPatient(patientDto);
+  public ResponseEntity<ApiResponse<PatientDto>> registerPatient(@RequestBody @Valid PatientDto patientDto) {
+    ApiResponse<PatientDto> registeredPatient = patientRegistrationService.registerPatient(patientDto);
     return new ResponseEntity<>(registeredPatient, HttpStatus.CREATED);
   }
 
@@ -42,18 +43,24 @@ public class PatientRegistrationServiceController {
    * @return list of registered patients
    */
   @GetMapping
-  public ResponseEntity<List<PatientDto>> getAllRegisteredPatients(
+  public ResponseEntity<ApiResponse<List<PatientDto>>> getAllRegisteredPatients(
       @RequestParam(value = "page", defaultValue = ResponseUtils.DEFAULT_PAGE_NUMBER) Integer page,
       @RequestParam(value = "size", defaultValue = ResponseUtils.DEFAULT_PAGE_SIZE) Integer size) {
     try {
-      List<PatientDto> registeredPatients = patientRegistrationService.getAllRegisteredPatients(page, size);
-      if (registeredPatients.isEmpty()) {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-      }
-      return new ResponseEntity<>(registeredPatients, HttpStatus.OK);
+      ApiResponse<List<PatientDto>> registeredPatients = patientRegistrationService.getAllRegisteredPatients(page, size);
+      return ResponseEntity.ok(registeredPatients);
     } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+      return buildErrorResponse();
     }
+  }
+
+  private ResponseEntity<ApiResponse<List<PatientDto>>> buildErrorResponse() {
+    ApiResponse<List<PatientDto>> errorResponse = ApiResponse.<List<PatientDto>>builder()
+            .success(false)
+            .message("An error occurred while fetching all registered patients")
+            .build();
+    return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+
   }
 
   /**
@@ -63,9 +70,20 @@ public class PatientRegistrationServiceController {
    * @return patient details
    */
   @GetMapping(value = "{id}")
-  public ResponseEntity<PatientDto> getRegisteredPatientById(@PathVariable(name = "id") Long patientId) {
-    PatientDto patientDto = patientRegistrationService.getRegisteredPatientById(patientId);
-    return new ResponseEntity<>(patientDto, HttpStatus.OK);
+  public ResponseEntity<ApiResponse<PatientDto>> getRegisteredPatientById(@PathVariable(name = "id") Long patientId) {
+    try {
+      return ResponseEntity.ok(patientRegistrationService.getRegisteredPatientById(patientId));
+    } catch (Exception e) {
+      return buildGetPatientByIdErrorResponse();
+    }
+  }
+
+  private ResponseEntity<ApiResponse<PatientDto>> buildGetPatientByIdErrorResponse() {
+    ApiResponse<PatientDto> response = ApiResponse.<PatientDto>builder()
+            .success(false)
+            .message("An error occurred while fetching patient details")
+            .build();
+    return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   /**
@@ -79,7 +97,6 @@ public class PatientRegistrationServiceController {
     //Delete patient with given id
     patientRegistrationService.deleteRegisteredPatient(patientId);
     return new ResponseEntity<>("Patient successfully deleted", HttpStatus.OK);
-
   }
 
 }

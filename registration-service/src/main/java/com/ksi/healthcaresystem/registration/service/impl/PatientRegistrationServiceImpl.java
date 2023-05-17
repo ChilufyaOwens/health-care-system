@@ -1,5 +1,6 @@
 package com.ksi.healthcaresystem.registration.service.impl;
 
+import com.ksi.healthcaresystem.commons.dto.ApiResponse;
 import com.ksi.healthcaresystem.commons.events.HealthCareSystemEvent;
 import com.ksi.healthcaresystem.commons.exceptions.ResourceNotFoundException;
 import com.ksi.healthcaresystem.registration.dto.AddressDto;
@@ -48,7 +49,7 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
      * @return registered patient
      */
     @Override
-    public PatientDto registerPatient(PatientDto patientDto) {
+    public ApiResponse<PatientDto> registerPatient(PatientDto patientDto) {
         log.info("Registering new patient with details: {}", patientDto);
         Patient mappedPatient = patientMapper.toEntity(patientDto);
         //Create a patient object
@@ -76,10 +77,12 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
 
         //Publish event
         PatientRegistrationEvent patientRegistrationEvent = new PatientRegistrationEvent(this, savedPatient);
-        HealthCareSystemEvent<PatientRegistrationEvent> healthCareSystemEvent = new HealthCareSystemEvent<>(patientRegistrationEvent);
+        HealthCareSystemEvent<PatientRegistrationEvent> healthCareSystemEvent =
+                new HealthCareSystemEvent<>(patientRegistrationEvent);
         eventPublisher.publishEvent(healthCareSystemEvent);
 
-        return savedPatient;
+        return buildPatientRegistrationResponse(savedPatient, "Patient has been successfully registered with " +
+                "'healthcare number' " + savedPatient.getHealthCareNumber());
     }
 
     /**
@@ -103,7 +106,7 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
      */
     @Cacheable(value = "patientCache")
     @Override
-    public List<PatientDto> getAllRegisteredPatients(Integer page, Integer size) {
+    public ApiResponse<List<PatientDto>> getAllRegisteredPatients(Integer page, Integer size) {
         log.info("Fetching all registered patients");
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
         Page<Patient> patients = patientRepository.findAll(pageable);
@@ -113,7 +116,15 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
             patientList.add(patientDto);
         });
 
-        return patientList;
+        return buildApiResponse(patientList);
+    }
+
+    private ApiResponse<List<PatientDto>> buildApiResponse(List<PatientDto> patientList) {
+        return ApiResponse.<List<PatientDto>>builder()
+                .success(true)
+                .message("List of registered patients")
+                .data(patientList)
+                .build();
     }
 
     /**
@@ -126,18 +137,28 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
      */
     @Cacheable(value = "patientCache", key = "#patientId")
     @Override
-    public PatientDto getRegisteredPatientById(Long patientId) {
+    public ApiResponse<PatientDto> getRegisteredPatientById(Long patientId) {
         log.info("Fetching patient with  ID: {}", patientId);
 
 
         final Optional<Patient> optionalPatient = patientRepository.findById(patientId);
         if (optionalPatient.isEmpty()) {
+            log.error("Patient with 'id' -> {} does not exist",patientId);
             throw new ResourceNotFoundException("Patient", "id", String.valueOf(patientId));
+
         }
         //Save patient record in a redis cache
         log.info("Patient registration service findById() : cache insert -> {}",
                 patientMapper.toDto(optionalPatient.get()));
-        return patientMapper.toDto(optionalPatient.get());
+        return buildPatientRegistrationResponse(patientMapper.toDto(optionalPatient.get()), "Successfully retrieved patient with 'id' " + patientId);
+    }
+
+    private ApiResponse<PatientDto> buildPatientRegistrationResponse(PatientDto patientDto, String message) {
+        return ApiResponse.<PatientDto>builder()
+                .success(true)
+                .message(message)
+                .data(patientDto)
+                .build();
     }
 
     /**
