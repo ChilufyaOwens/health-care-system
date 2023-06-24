@@ -139,10 +139,6 @@ hnotification-service/src/main/java/com/ksi/healthcaresystem/notificationservice
 xnotification-service/src/main/java/com/ksi/healthcaresystem/notificationservice/config/event/EmailSenderEventConfig.java,7\c\7c802af35a17f1b8e278ee42a5b254413bade34e
 z
 Jcommons/src/main/java/com/ksi/healthcaresystem/commons/dto/MessageDto.java,9\d\9db61f8f12e38db1dfb9166e268d46402bf093ad
-›
-knotification-service/src/main/java/com/ksi/healthcaresystem/notificationservice/config/mail/MailConfig.java,e\8\e865b6b90d94e7ce4fb88c5b7e8095fcec881ba2
-¨
-xnotification-service/src/main/java/com/ksi/healthcaresystem/notificationservice/service/impl/EmailSenderServiceImpl.java,2\c\2cf5b4837b3004fa329e827f97fb841ca4ed527c
 ©
 ynotification-service/src/main/java/com/ksi/healthcaresystem/notificationservice/service/impl/EmailDetailsServiceImpl.java,1\2\124b2f4d8622a7b39c6cdf832cfa62151d008301
 ¬
@@ -197,3 +193,17 @@ rregistration-service/src/main/java/com/ksi/healthcaresystem/registration/config
 Tward-service/src/main/java/com/ksi/healthcaresystem/ward/WardServiceApplication.java,2\1\21c6315bd500acbc95c048cc3f25cd00e314c560
 Œ
 \registration-service/src/main/java/com/ksi/healthcaresystem/registration/dto/PatientDto.java,1\e\1ec9f8c96a6370fa1ae56fded3ee5e1cb021c61b
+­
+}registration-service/src/main/java/com/ksi/healthcaresystem/registration/controller/PatientRegistrationServiceController.java,7\9\7921b051c36e9e81bf2c3b04ac97f83ff5a2882c
+¨
+xnotification-service/src/main/java/com/ksi/healthcaresystem/notificationservice/service/impl/EmailSenderServiceImpl.java,2\c\2cf5b4837b3004fa329e827f97fb841ca4ed527c
+ 
+pregistration-service/src/main/java/com/ksi/healthcaresystem/registration/service/PatientRegistrationService.java,2\6\26119221d38c62e928f7f0cdc97f4db9010f665b
+©
+yregistration-service/src/main/java/com/ksi/healthcaresystem/registration/service/impl/PatientRegistrationServiceImpl.java,3\f\3f5ba88dec9eb413473072841d6342d58444ec2c
+}
+Mcommons/src/main/java/com/ksi/healthcaresystem/commons/dto/PagingRequest.java,c\4\c4db202f99455b1330ddd7112015b398d7e63b66
+{
+Kcommons/src/main/java/com/ksi/healthcaresystem/commons/dto/ApiResponse.java,e\7\e7bd3255e5a48b8a1aca6f3492a7f2b48fb1379b
+›
+knotification-service/src/main/java/com/ksi/healthcaresystem/notificationservice/config/mail/MailConfig.java,e\8\e865b6b90d94e7ce4fb88c5b7e8095fcec881ba2
