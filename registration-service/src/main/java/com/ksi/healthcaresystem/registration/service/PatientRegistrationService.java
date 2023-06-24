@@ -9,5 +9,6 @@ public interface PatientRegistrationService {
   ApiResponse<PatientDto> registerPatient(PatientDto patientDto);
   ApiResponse<List<PatientDto>> getAllRegisteredPatients(Integer page, Integer size);
   ApiResponse<PatientDto> getRegisteredPatientById(Long patientId);
+  PatientDto updatePatientDemographics(Long patientId, PatientDto patientDto);
   void deleteRegisteredPatient(Long patientId);
 }

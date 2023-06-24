@@ -162,6 +162,28 @@ public class PatientRegistrationServiceImpl implements PatientRegistrationServic
     }
 
     /**
+   * This method updates patients demographics
+   * @param patientId patient ID
+   * @param patientDto patient details
+   * @return updated patient record
+   */
+  @Override
+  public PatientDto updatePatientDemographics(Long patientId, PatientDto patientDto) {
+    Patient existingPatient = patientRepository.findById(patientId)
+        .orElseThrow(
+            ()-> new ResourceNotFoundException("Patient", "id", String.valueOf(patientId))
+        );
+    //Check if the contact number is present
+    if(!patientDto.getContactNumber().isEmpty()){
+      existingPatient.setContactNumber(patientDto.getContactNumber());
+    }
+    if(!patientDto.getEmail().isEmpty()){
+      existingPatient.setEmail(patientDto.getEmail());
+    }
+    return patientMapper.toDto(patientRepository.save(existingPatient));
+  }
+
+  /**
      * This method deletes registered patient with the supplied patient Id
      *
      * @param patientId ID of the patient to be deleted
