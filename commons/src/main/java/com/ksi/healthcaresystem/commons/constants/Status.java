@@ -10,6 +10,9 @@ public enum Status {
   ASSIGNED("Assigned"),
   NON_FUNCTIONAL("NonFunctional"),
   OCCUPIED("Occupied"),
-  TAKEN("Taken");
+  TAKEN("Taken"),
+  PROCESSED("Processed"),
+  FAILED("Failed"),
+  SENT("Sent");
   private String statusCode;
 }

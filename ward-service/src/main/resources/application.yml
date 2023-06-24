@@ -1,0 +1,14 @@
+#====================
+#Server configuration
+#====================
+spring:
+  config:
+    import: "optional:configserver:http://config-service:8888"
+    activate:
+      on-profile: docker
+---
+spring:
+  application:
+    name: ward-service
+  config:
+    import: "optional:configserver:http://localhost:8888"

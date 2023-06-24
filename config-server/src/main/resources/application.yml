@@ -1,21 +1,17 @@
-#server configurations
-spring:
-  application:
-    name: config-server
-  #configure git repository for to hold configuration files
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/ChilufyaOwens/health-care-config-server
-          clone-on-start: true
-          default-label: master
+#==========================
+#application configurations
+#==========================
 server:
   port: 8888
+spring:
+  profiles:
+    active: native
+  application:
+    name: config-server
 
-
-
+#===============================
 #eureka server configuration
+#===============================
 eureka:
   instance:
     hostname: localhost
@@ -26,3 +22,4 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     enabled: true
+
